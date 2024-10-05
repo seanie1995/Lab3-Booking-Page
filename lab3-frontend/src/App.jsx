@@ -2,7 +2,8 @@ import { useState } from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import './App.css'
 import BookingForm from './components/BookingCreate'
-import EmailCheck from './components/CustomerEmailCheck'
+import EmailCheck from './components/CustomerEmailCheck2'
+
 
 
 function App() {

@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useLocation, useNavigate } from 'react-router-dom';
-import DateTimePicker from 'react-datetime-picker';
+import DateTimePicker from 'react-datetime-picker'
+
 
 const BookingForm = () => {
     const [partySize, setPartySize] = useState('');
@@ -25,9 +26,8 @@ const BookingForm = () => {
 
         try {
             const tableResponse = await axios.post('https://localhost:7234/api/Table/getAvailableTables', tableRequest);
-            setAvailableTables(tableResponse.data);
-            setError(null);
-
+            setAvailableTables(tableResponse.data); // Update state with available tables
+            setError(null); // Clear any previous errors
         } catch (error) {
             console.error('Error fetching available tables:', error);
             setError('Failed to fetch available tables.'); // Set error state for user feedback
@@ -52,13 +52,8 @@ const BookingForm = () => {
 
         try {
             const response = await axios.post(`https://localhost:7234/api/Booking/addBooking/${customerId}`, bookingData);
-
+            alert('Booking successful!');
             console.log('Booking response:', response.data);
-
-            if (window.confirm('Booking successful! Would you like to return to the home page?')) {
-                window.location.href = 'https://localhost:7010/';
-            }
-
 
         } catch (error) {
             console.error('Error creating booking:', error);
@@ -75,42 +70,8 @@ const BookingForm = () => {
             <h2 className="mb-4">Booking Form for Customer {customerId}</h2>
 
             <form onSubmit={handleSubmit}>
-                <div className="mb-3">
-                    <label className='form-label' htmlFor='partySize'>Party Size:</label>
-                    <input
-                        id='partySize'
-                        type="number"
-                        className='form-control'
-                        value={partySize}
-                        onChange={(e) => setPartySize(e.target.value)}
-                        required
-                    />
-                </div>
 
-                <div className="mb-3">
-                    <label className="form-label" htmlFor='bookingStart'>Booking Start:</label>
-                    <input
-                        id='bookingStart'
-                        type="datetime-local"
-                        className="form-control"
-                        value={bookingStart}
-                        onChange={(e) => setBookingStart(e.target.value)}
-                        required
-                    />
-                </div>
-
-                <div className="mb-3">
-                    <label className="form-label" htmlFor='bookingEnd'>Booking End:</label>
-                    <input
-                        id='bookingEnd'
-                        type="datetime-local"
-                        className="form-control"
-                        value={bookingEnd}
-                        onChange={(e) => setBookingEnd(e.target.value)}
-                        required
-                    />
-                </div>
-
+                <DateTimePicker label="Basic date time picker" />
                 <button type='submit' className="btn btn-primary">Find Available Tables</button>
 
             </form>
@@ -128,7 +89,7 @@ const BookingForm = () => {
                             <li key={table.id} className="list-group-item d-flex justify-content-between align-items-center">
                                 Table {table.id} - Capacity: {table.capacity}
                                 <button
-                                    className={`btn btn-sm ${selectedTableId === table.id ? 'btn-danger' : 'btn-success'}`}
+                                    className="btn btn-success btn-sm"
                                     onClick={() => setSelectedTableId(table.id)} // Set the selected table ID
                                 >
                                     Select
