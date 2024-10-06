@@ -9,7 +9,7 @@ const BookingForm = () => {
     const [bookingEnd, setBookingEnd] = useState('');
     const [availableTables, setAvailableTables] = useState([]);
     const [error, setError] = useState(null);
-    const [selectedTableId, setSelectedTableId] = useState(null); // Store the selected table ID
+    const [selectedTableId, setSelectedTableId] = useState(null);
     const location = useLocation();
     const { customerId } = location.state || {};
     const navigate = useNavigate();
@@ -30,7 +30,7 @@ const BookingForm = () => {
 
         } catch (error) {
             console.error('Error fetching available tables:', error);
-            setError('Failed to fetch available tables.'); // Set error state for user feedback
+            setError('Failed to fetch available tables.');
         }
     }
 
@@ -115,10 +115,13 @@ const BookingForm = () => {
 
             </form>
 
-
-
-
             {error && <div className="alert alert-danger mt-3">{error}</div>}
+
+            {availableTables.length === 0 && (
+                <div className="alert alert-warning mt-3">
+                    No tables match your requirements.
+                </div>
+            )}
 
             {availableTables.length > 0 && (
                 <div className="mt-4">
@@ -129,7 +132,7 @@ const BookingForm = () => {
                                 Table {table.id} - Capacity: {table.capacity}
                                 <button
                                     className={`btn btn-sm ${selectedTableId === table.id ? 'btn-danger' : 'btn-success'}`}
-                                    onClick={() => setSelectedTableId(table.id)} // Set the selected table ID
+                                    onClick={() => setSelectedTableId(table.id)}
                                 >
                                     Select
                                 </button>
